@@ -1,0 +1,31 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client-start": "npm start --prefix Frontend",
+    "client-install": "npm install --prefix Frontend",
+    "dev": "concurrently \"npm run server \" \"npm run client-start\" "
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SaravananV97/expense-tracker"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "body-parser": "^1.18.3",
+    "cookie-session": "^2.0.0-beta.3",
+    "express": "^4.16.4",
+    "mongoose": "^5.3.9",
+    "nodemon": "^1.18.5",
+    "passport": "^0.4.0",
+    "passport-google-oauth20": "^1.0.0",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1"
+  }
+}
