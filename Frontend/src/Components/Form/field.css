@@ -1,0 +1,26 @@
+form{
+    background: #333;
+    height: 400px;
+    text-align: center;
+}
+
+.Align{
+    margin-left: 50px;
+}
+
+.form-inline{
+    margin-bottom: 7px;
+}
+
+.BtnContainer{
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    margin-right: 80px;
+}
+
+#SubmitExpense{
+    color: black;
+    background: #85BB65;
+    margin-top: 30px;
+}

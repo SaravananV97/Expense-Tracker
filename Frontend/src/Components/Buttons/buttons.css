@@ -1,0 +1,10 @@
+.AddButton{
+    height: 50px;
+    width: 200px;
+    font-size: 20px;
+}
+
+.BtnContainer{
+    display: flex;
+    justify-content: space-around;
+}
