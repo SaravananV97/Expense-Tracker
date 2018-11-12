@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const userModel = require("./userModel");
 
-const postSchema = new Schema({
+const expenseSchema = new Schema({
     user:{
         type: Schema.Types.ObjectId,
         ref: "User"
@@ -24,4 +24,7 @@ const postSchema = new Schema({
 }
 ]
 });
+
+const expensesModel =  mongoose.model("Expenses", expenseSchema);
+module.exports = expensesModel;
 

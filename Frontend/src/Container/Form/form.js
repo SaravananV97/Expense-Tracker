@@ -2,11 +2,12 @@ import React, {Component} from "react";
 import Field from "../../Components/Form/formfield";
 import "../../Components/Form/field.css";
 import axios from "axios";
+import { throws } from "assert";
 class Form extends Component{
-
     constructor(props){
         super(props);
         this.state = {
+            successMsg: false,
             details:"",
             amount:0,
             catagory:"",
@@ -16,6 +17,8 @@ class Form extends Component{
     }
 
     componentDidMount(){
+        axios.get("/api/expenses/test").then(res => console.log(res.data.msg))
+        .catch(err => console.log(err))
         this.setState({currentUser: this.props.current_user});
     }
 
@@ -30,8 +33,12 @@ class Form extends Component{
 
     handleClick = (event) => {
         event.preventDefault();
-        axios.post("/api/expenses/add", {expense: this.state})
-        .then(res => console.log(res))
+        const val = this.state;
+        axios.post("/api/expenses/add", {expense:val})
+        .then((res) => {
+            if(res.status === 200)
+                this.setState({successMsg: true});
+        })
         .catch(err => console.log(err));
     }
 
@@ -44,7 +51,7 @@ class Form extends Component{
     }
     
     render(){
-        
+        const successMsg = <p style = {{"color": "#fff"}}>Expense Added Successfully</p>;
         return (
             <form className = "text-center border border-light p-5">
             <div className = "Align">
@@ -52,8 +59,9 @@ class Form extends Component{
                 <Field dropDownChange = {this.dropDownChange} stuffs = {this.props.list} fieldtype = {"dropdown"} ></Field>
                 <Field onChange = {this.detailsChange} fieldtype = {"input"} type = "text" placeholder = {this.props.details}></Field>
                 <Field onChange = {this.amountChange} fieldtype = {"input"}  type = "text" placeholder = {this.props.amount}></Field>
+                {this.state.successMsg?successMsg:null}
                <div className = "BtnContainer">
-                <Field id = "SubmitExpense" onClick = {this.handleClick} type = "submit" value = {this.props.button}></Field>
+                <Field id = "SubmitExpense" onClick = {this.handleClick} type = "submit" value = {this.state.successMsg?"Add More?":this.props.button}></Field>
                 <button onClick = {this.props.cancelClick} className = "btn btn-danger">Cancel</button>
                 </div>
             </div>

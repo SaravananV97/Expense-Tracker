@@ -14,7 +14,6 @@ class NavItem extends Component{
     }
 
     render(){
-
         return(
             <li key = {this.props.children} className="nav-item">
                 <a className="nav-link" href = "http://localhost:5000/api/users/login">{this.props.children}</a>

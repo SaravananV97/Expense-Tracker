@@ -7,7 +7,7 @@ import Modal from "../../Components/Modal/modal";
 import Form from "../../Container/Form/form";
 import Backdrop from "../../Components/Backdrop/backdrop";
 class Tracker extends Component{
-
+    
     constructor(props){
         super();
         this.state = {

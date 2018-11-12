@@ -3,7 +3,7 @@ const passport = require("passport");
 const app = express();
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
-const port = process.env.PORT || 5000;
+const port =process.env.PORT || 5000;
 const db = require("./Config/Keys/key").mongoURI;
 const login = require("./Routes/api/userlogin");
 const expenses = require("./Routes/api/expenses");
@@ -23,7 +23,7 @@ app.use("/api/expenses", expenses);
 app.use(cookieSession({
     keys: [cookieSecret],
     maxAge: 24 * 60 * 60 * 1000
-}))
+}));
 app.get("/",  (req, res) => {
     res.send("Welcome to Home");
 });
