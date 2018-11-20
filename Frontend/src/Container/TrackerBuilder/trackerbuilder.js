@@ -3,8 +3,11 @@ import "./trackerbuilder.css";
 import NavBar from "../../Components/Navbar/navbar"
 import AddButtons from "../../Components/Buttons/buttons";
 import Chart from "../../Components/Chart/chart";
+import {connect} from "react-redux";
+
 import Modal from "../../Components/Modal/modal";
 import Form from "../../Container/Form/form";
+import * as actionTypes from "../../Store/actions";
 import Backdrop from "../../Components/Backdrop/backdrop";
 class Tracker extends Component{
     
@@ -13,12 +16,9 @@ class Tracker extends Component{
         this.state = {
             currentUserId: "",
             currentHoldings: 0,
-            addingIncome: false,
-            addingExpense: false,
             currentUser: "",
             currentExpense: 0,
             currentIncome: 0
-
         }
     }
 
@@ -33,39 +33,49 @@ class Tracker extends Component{
         }
     }
 
-    cancelClickHandler = (event) => {
-        event.preventDefault();
-        this.setState({addingExpense:false, addingIncome:false});
-    }
-
-    expenseClickHandler = () => {
-        this.setState({addingExpense: true});
-        console.log("Adding Expense Clicked");
-}
-
-    incomeClickHandler = () => this.setState({addingIncome: true});
-
     render(){
+        console.log(this.state);
        return (
             <div>
-                <Backdrop show = {this.state.addingIncome || this.state.addingExpense}></Backdrop>
+                <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
                 <NavBar currentUser = {this.state.currentUser}></NavBar>
                 <Chart expense = {this.state.currentExpense} holdings = {this.state.currentHoldings}></Chart>
-                <Modal show = {this.state.addingExpense}><Form
+                <Modal show = {this.props.addingExpense}><Form
                 details = "Expense Details" current_user = {this.state.currentUserId} amount = "Amount Spent" 
                 button = "Add Expense" list = {["Food", "Travel", "Movies", "Party"]}
-                 cancelClick = {this.cancelClickHandler}>
+                 cancelClick = {this.props.onCancelClick}>
                 </Form></Modal>
-                <Modal show = {this.state.addingIncome}><Form
+                <Modal show = {this.props.addingIncome}><Form
                 details = "Income Details" amount = "Amount being added" 
                 button = "Add Income" list = {["Salary", "Deposit", "Savings"]}
-                 cancelClick = {this.cancelClickHandler}>
+                 cancelClick = {this.props.onCancelClick}>
                 </Form></Modal>
-                <AddButtons incomeClick = {this.incomeClickHandler} expenseClick = {this.expenseClickHandler}></AddButtons>
+                <AddButtons incomeClick = {this.props.onAddIncomeClick} expenseClick = {this.props.onAddExpenseClick}></AddButtons>
             </div>
         );
     }
 }
 
-export default Tracker;
+
+const mapStateToProps = (state) => {
+    return {
+        currentUserId:  state.userInfo.currentUserId,
+        currentHoldings: state.userInfo.currentHoldings,
+        addingIncome: state.addingIncome,
+        addingExpense: state.addingExpense,
+        currentUser: state.userInfo.currentUser,
+        currentExpense: state.userInfo.currentExpense,
+        currentIncome: state.userInfo.currentIncome
+    }
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onAddExpenseClick: () => dispatch({type:actionTypes.addingExpense}),
+        onAddIncomeClick: () => dispatch({type: actionTypes.addingExpense }),
+        onCancelClick: () => dispatch({type: actionTypes.cancelAddition}),        
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Tracker);
 

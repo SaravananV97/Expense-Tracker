@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Field from "../../Components/Form/formfield";
 import "../../Components/Form/field.css";
 import axios from "axios";
-import { throws } from "assert";
 class Form extends Component{
     constructor(props){
         super(props);

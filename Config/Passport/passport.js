@@ -3,12 +3,13 @@ const GoogleStrategy = require("passport-google-oauth20");
 const googleOAuth = require("../Keys/key").googleOAuth;
 const User = require("../../DBModel/userModel");
 
+
 passport.serializeUser((user, done) => {
-    done(null, user.id)
-});
+    done(null, user.id)    // for cookies
+});                                 
 
 passport.deserializeUser((id, done) => {
-    user.findById(id).then((user) => {
+    user.findById(id).then((user) => {  //for cookies
         done(null, user);
     });
 });
