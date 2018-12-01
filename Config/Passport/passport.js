@@ -5,11 +5,11 @@ const User = require("../../DBModel/userModel");
 
 
 passport.serializeUser((user, done) => {
-    done(null, user.id)    // for cookies
+    done(null, user.id)    // for adding cookies 
 });                                 
 
 passport.deserializeUser((id, done) => {
-    user.findById(id).then((user) => {  //for cookies
+    User.findById(id).then((user) => {  //for removing cookies with id
         done(null, user);
     });
 });

@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const app = express();
+const cors = require("cors");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 const port =process.env.PORT || 5000;
@@ -9,21 +10,23 @@ const login = require("./Routes/api/userlogin");
 const expenses = require("./Routes/api/expenses");
 const cookieSecret = require("./Config/Keys/key").cookieSecret;
 const cookieSession = require("cookie-session");
+const session = require("express-session");
 require("./Config/Passport/passport");
 
 mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to DB"))
     .catch((err) => console.log(err));
-
+app.use(cors());
+app.use(cookieSession({
+    keys: [cookieSecret],
+    maxAge: 30 * 24 * 60 * 60 * 1000
+}));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended: false}))
 app.use("/api/users",login);
 app.use("/api/expenses", expenses);
-app.use(cookieSession({
-    keys: [cookieSecret],
-    maxAge: 24 * 60 * 60 * 1000
-}));
 app.get("/",  (req, res) => {
     res.send("Welcome to Home");
 });

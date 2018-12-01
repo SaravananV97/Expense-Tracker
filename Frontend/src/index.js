@@ -5,11 +5,23 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import mainReducer from "../src/Store/reducer";
-import {createStore} from "redux";
+import mainReducer from "./Store/Reducers/reducer";
+import formReducer from "../src/Store/Reducers/formReducer";
+import {createStore, compose} from "redux";
+import thunk from "redux-thunk";
+import { applyMiddleware, combineReducers } from 'redux';
 
-const store = createStore(mainReducer);
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const logger = store => next => action => {
+  console.log('dispatching', action);
+  let result = next(action);
+  console.log('next state', store.getState());
+  return result;
+}
 
+const rootReducer = combineReducers({main: mainReducer, form: formReducer});
+
+const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 
 const app = (
     <Provider store = {store}>

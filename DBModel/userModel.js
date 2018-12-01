@@ -15,13 +15,43 @@ const userSchema = new Schema({
         default: Date.now()
     },
     currentHoldings: {
-        type: String,
+        type: Number,
         default: 0
     },
-    expense: {
-        type: String,
+    totalExpenses:{
+        type: Number,
         default: 0
     },
+    expenses:[
+        {
+            date: {
+            type: String
+            },
+        category:{
+            type:String
+        },
+        details:{
+            type:String
+        },
+            amount:{
+            type:Number
+        }
+    }],
+    incomes:[
+            {
+                date: {
+                type: String
+                },
+            category:{
+                type:String
+            },
+            details:{
+                type:String
+            },
+                amount:{
+                type:Number
+            }
+        }]
 });
 
 const userModel =  mongoose.model("User", userSchema);

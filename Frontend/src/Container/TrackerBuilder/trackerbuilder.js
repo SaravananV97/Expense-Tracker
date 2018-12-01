@@ -1,54 +1,52 @@
 import React, {Component} from "react";
 import "./trackerbuilder.css";
-import NavBar from "../../Components/Navbar/navbar"
+import NavBar from "../../Components/Navbar/navbar";
+import * as asyncActionCreators from "../../Store/Actions/axios-actions";
 import AddButtons from "../../Components/Buttons/buttons";
 import Chart from "../../Components/Chart/chart";
 import {connect} from "react-redux";
-
+import axios from "axios";
 import Modal from "../../Components/Modal/modal";
 import Form from "../../Container/Form/form";
-import * as actionTypes from "../../Store/actions";
+import * as actionCreators from "../../Store/Actions/actionsCreators";
 import Backdrop from "../../Components/Backdrop/backdrop";
+
 class Tracker extends Component{
     
     constructor(props){
         super();
-        this.state = {
-            currentUserId: "",
-            currentHoldings: 0,
-            currentUser: "",
-            currentExpense: 0,
-            currentIncome: 0
-        }
     }
 
     componentDidMount(){
-        if(this.props.location.search){
-            const query = new URLSearchParams(this.props.location.search);
-            let params = [];
-            for(let param of query.entries())
-                params.push(param[1]);
-            this.setState({currentUserId: params[0], currentUser: params[1], currentHoldings:params[2], currentExpense: params[3],
-                        currentIncome: params[2] - params[3]});
+         if(this.props.location.search){
+             const query = new URLSearchParams(this.props.location.search);
+             let params = [];
+             for(let param of query.entries())
+                 params.push(param[1])
+        axios.get(`/api/users/userdetails/${params[0]}`).then((details) => 
+        {
+            console.log(details);
+            this.props.setDetails(details);
+    });
         }
     }
 
     render(){
-        console.log(this.state);
+        console.log(this.props)
        return (
             <div>
                 <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
-                <NavBar currentUser = {this.state.currentUser}></NavBar>
-                <Chart expense = {this.state.currentExpense} holdings = {this.state.currentHoldings}></Chart>
-                <Modal show = {this.props.addingExpense}><Form
-                details = "Expense Details" current_user = {this.state.currentUserId} amount = "Amount Spent" 
+                <NavBar currentUser = {this.props.currentUser}></NavBar>
+                <Chart expense = {this.props.currentExpense} holdings = {this.props.currentHoldings}></Chart>
+                <Modal show = {this.props.addingExpense}><Form update_details = {this.props.modifyDetails}
+                details_placeholder = "Expense Details" exp_inc = {this.props.addingExpense} current_user = {this.props.currentUserId} amount_placeholder = "Amount Spent" 
                 button = "Add Expense" list = {["Food", "Travel", "Movies", "Party"]}
                  cancelClick = {this.props.onCancelClick}>
                 </Form></Modal>
-                <Modal show = {this.props.addingIncome}><Form
-                details = "Income Details" amount = "Amount being added" 
+                <Modal show = {this.props.addingIncome}><Form update_details = {this.props.modifyDetails}
+                details_placeholder = "Income Details" {...this.props} current_user = {this.props.currentUserId} amount_placeholder = "Amount being added" 
                 button = "Add Income" list = {["Salary", "Deposit", "Savings"]}
-                 cancelClick = {this.props.onCancelClick}>
+                 cancelClick = {() => this.props.onCancelClick(this.props.currentUserId)}>
                 </Form></Modal>
                 <AddButtons incomeClick = {this.props.onAddIncomeClick} expenseClick = {this.props.onAddExpenseClick}></AddButtons>
             </div>
@@ -56,24 +54,26 @@ class Tracker extends Component{
     }
 }
 
-
 const mapStateToProps = (state) => {
     return {
-        currentUserId:  state.userInfo.currentUserId,
-        currentHoldings: state.userInfo.currentHoldings,
-        addingIncome: state.addingIncome,
-        addingExpense: state.addingExpense,
-        currentUser: state.userInfo.currentUser,
-        currentExpense: state.userInfo.currentExpense,
-        currentIncome: state.userInfo.currentIncome
+        currentUserId:  state.main.userInfo.currentUserId,
+        currentHoldings: state.main.userInfo.currentHoldings,
+        addingIncome: state.main.addingIncome,
+        addingExpense: state.main.addingExpense,
+        currentUser: state.main.userInfo.currentUser,
+        currentExpense: state.main.userInfo.currentExpense,
+        currentIncome: state.main.userInfo.currentIncome,
     }
 };
 
+
 const mapDispatchToProps = (dispatch) => {
     return {
-        onAddExpenseClick: () => dispatch({type:actionTypes.addingExpense}),
-        onAddIncomeClick: () => dispatch({type: actionTypes.addingExpense }),
-        onCancelClick: () => dispatch({type: actionTypes.cancelAddition}),        
+        modifyDetails: (user_id) => dispatch(asyncActionCreators.getUserInfoAsync(user_id)),
+        setDetails: (details) => dispatch(actionCreators.setUserDetails(details)),
+        onAddExpenseClick: () => dispatch(actionCreators.addingExpenseCreator()),
+        onAddIncomeClick: () => dispatch(actionCreators.addingIncomeCreator()),
+        onCancelClick: (user_id) => dispatch(actionCreators.cancelAdditionCreator(user_id)),        
     }
 }
 
