@@ -22,7 +22,7 @@ const Field = (props) => {
                 );
                 break;
         default:
-            field = <input className = "form-control mb-4"  {...props} />;
+            field = <input {...props} className = "form-control mb-4"  {...props} />;
     }
         return (
         <div className = "form-inline">

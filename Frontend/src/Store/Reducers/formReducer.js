@@ -6,7 +6,8 @@ const initState = {
     amount:0,
     catagory:"",
     date: new Date().toLocaleDateString(),
-    currentUser: ""
+    currentUser: "",
+    errors: []
 }
 
 const formReducer = (state = initState, action) => {
@@ -23,6 +24,10 @@ const formReducer = (state = initState, action) => {
             return {...state, amount: Number(action.payload)}
         case actionTypes.setAdditionDetails:
             return {...state, details: action.payload}
+        case actionTypes.formCancelled:
+            return {...initState}
+        case actionTypes.displayErrors:
+            return {...state, errors: [...action.payload]}
         default: return state
     }
 }

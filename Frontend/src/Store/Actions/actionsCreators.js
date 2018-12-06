@@ -17,6 +17,7 @@ export const modifyHoldingsCreator = () => {
 }
 
 export const cancelAdditionCreator = (user_id) => {
+    console.log(user_id);
     return { type: actionTypes.cancelAddition, payload: user_id };
 }
 

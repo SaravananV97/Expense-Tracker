@@ -12,3 +12,6 @@ export const dateSet = "DATE_SET";
 export const setCurrentUser = "CURRENT_USER_SET";
 export const setAmount = "SET_AMOUNT";
 export const setAdditionDetails = "SET_ADD_DETAILS";
+export const formCancelled = "RESET_FORM_STATE";
+export const displayErrors = "ERRORS_DISPLAY";
+

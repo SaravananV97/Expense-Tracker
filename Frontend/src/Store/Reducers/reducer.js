@@ -36,6 +36,7 @@ const mainReducer = (state = initState, action) => {
                         currentIncome: action.data.currentHoldings + action.data.totalExpenses
                     }
                 }
+
         case actionTypes.getUserInfoSuccess:
                const user = action.payload;
                console.log(user);

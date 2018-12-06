@@ -1,11 +1,19 @@
 form{
     background: #333;
-    height: 400px;
+    height: auto;
     text-align: center;
 }
 
 .Align{
     margin-left: 50px;
+}
+
+.Errors{
+    margin-left: 10%;
+    list-style-position: inside;
+    list-style-type: disc;
+    color: white;
+    text-align: left;
 }
 
 .form-inline{
@@ -19,8 +27,13 @@ form{
     margin-right: 80px;
 }
 
-#SubmitExpense{
+.btn-primary{
     color: black;
     background: #85BB65;
-    margin-top: 30px;
+    margin: 1px solid #85BB65;
 }
+
+.btn-primary:hover{
+    background: green;
+}
+

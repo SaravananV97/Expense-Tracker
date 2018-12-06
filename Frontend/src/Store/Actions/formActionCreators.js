@@ -23,3 +23,12 @@ export const changeDate = (date) => {
 export const changeCategory = (category) => {
     return {type: actionTypes.catagorySet, payload: category}
 }
+
+export const cancelClick = () => {
+    return {type: actionTypes.formCancelled}
+}
+
+export const displayErrors = (errors) => {
+    return {type: actionTypes.displayErrors, payload: errors}
+}
+
