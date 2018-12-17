@@ -24,12 +24,7 @@ router.get("/userdetails/:id",(req, res) => {
 router.get("/login", passport.authenticate("google", {scope: ["profile"]}));
 
 router.get("/auth/redirect", passport.authenticate("google"), (req, res) => {
-    res.redirect(url.format({
-        pathname: "http://localhost:3000/home",
-        query:{
-            id: req.user.id
-        }
-    }));
+    res.redirect(url.format(`http://localhost:3000/home/${req.user.id}`));
 });
 
 module.exports = router;

@@ -1,0 +1,39 @@
+*{
+  margin: 0;
+  padding:0;
+  box-sizing: border-box;
+}
+
+.summary{
+  font: 55px;
+}
+
+.container{
+  justify-content: space-between;
+  display: flex;
+  padding: 10px;
+  background: #ccc;
+  flex-direction: column;
+  font-size:15px;
+}
+.item{
+  color: #fff;
+  background: #613F54;
+  padding: 30px;
+  margin: 30px;
+}
+
+.detail{
+  padding: 0.1rem;
+  font-size: 1rem;
+}
+
+.summary{
+    font-size: 1rem;
+    text-align: center;
+}
+
+.summary-box{
+  display: flex;
+  flex-direction: column;
+}

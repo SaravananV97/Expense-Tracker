@@ -7,7 +7,7 @@ const validateForm = (obj) => {
     let errorMsgs = [];
     let dateRegex = /^\d{4}[./-]\d{2}[./-]\d{2}$/
     if(!dateRegex.test(obj.date))
-        errorMsgs.push("Please fill a Valid Date");
+        errorMsgs.push("Please fi11ll a Valid Date");
     console.log("validating...")
     let amount = obj.amount;
     if(isEmpty(amount) || amount <= 0 || isNaN(amount))

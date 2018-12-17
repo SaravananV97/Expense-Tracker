@@ -18,25 +18,20 @@ class Tracker extends Component{
     }
 
     componentDidMount(){
-         if(this.props.location.search){
-             const query = new URLSearchParams(this.props.location.search);
-             let params = [];
-             for(let param of query.entries())
-                 params.push(param[1])
-        axios.get(`/api/users/userdetails/${params[0]}`).then((details) => 
+        const id = this.props.match.params.id;
+        axios.get(`/api/users/userdetails/${id}`).then((details) => 
         {
             console.log(details);
             this.props.setDetails(details);
     });
         }
-    }
 
     render(){
         console.log(this.props)
        return (
             <div>
                 <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
-                <NavBar currentUser = {this.props.currentUser}></NavBar>
+                <NavBar currentUserId = {this.props.currentUserId} currentUser = {this.props.currentUser}></NavBar>
                 <Chart expense = {this.props.currentExpense} holdings = {this.props.currentHoldings}></Chart>
                 <Modal show = {this.props.addingExpense}><Form update_details = {this.props.modifyDetails}
                 details_placeholder = "Expense Details" exp_inc = {this.props.addingExpense} current_user = {this.props.currentUserId} amount_placeholder = "Amount Spent" 
