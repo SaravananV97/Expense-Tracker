@@ -9,8 +9,8 @@ return (
 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul className="navbar-nav mr-auto">
-            <NavItem classNameName = "active">Home</NavItem>
-            <NavItem>Welcome, {props.currentUser}</NavItem>
+            <NavItem href = {`home/${props.currentUserId}`} className = "active">Home</NavItem>
+            {props.is_home?<NavItem>Welcome, {props.currentUser}</NavItem>:null}
             <NavItem href = {`expenses/${props.currentUserId}`}>Expenses</NavItem>
             <NavItem href = "incomes">Incomes</NavItem>
         </ul>

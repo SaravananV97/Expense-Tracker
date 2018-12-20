@@ -10,7 +10,6 @@ import Modal from "../../Components/Modal/modal";
 import Form from "../../Container/Form/form";
 import * as actionCreators from "../../Store/Actions/actionsCreators";
 import Backdrop from "../../Components/Backdrop/backdrop";
-
 class Tracker extends Component{
     
     constructor(props){
@@ -29,9 +28,9 @@ class Tracker extends Component{
     render(){
         console.log(this.props)
        return (
-            <div>
+            <div className = "Body">
                 <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
-                <NavBar currentUserId = {this.props.currentUserId} currentUser = {this.props.currentUser}></NavBar>
+                <NavBar is_home = {true} currentUserId = {this.props.currentUserId} currentUser = {this.props.currentUser}></NavBar>
                 <Chart expense = {this.props.currentExpense} holdings = {this.props.currentHoldings}></Chart>
                 <Modal show = {this.props.addingExpense}><Form update_details = {this.props.modifyDetails}
                 details_placeholder = "Expense Details" exp_inc = {this.props.addingExpense} current_user = {this.props.currentUserId} amount_placeholder = "Amount Spent" 

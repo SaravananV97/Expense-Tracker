@@ -1,7 +1,8 @@
 import React, {Component} from "react";
-import Expense from "./expense";
+import "./expense.css";
+import NavBar from "../../Components/Navbar/navbar";
 import axios from "axios";
-import { throws } from "assert";
+import Card from "../../Components/Card/card";
 class Expenses extends Component {
 
     constructor(props){
@@ -22,10 +23,13 @@ class Expenses extends Component {
         if(this.state.expenses == null)
             return (<div>Loading...</div>);
         return (
+            <div className = "Body" >
+            <NavBar currentUserId = {this.props.match.params.id}></NavBar>
             <div className = "container">
                {this.state.expenses.map((val, i) => {
-                    return <Expense key = {i} expense = {val} />
+                    return <Card key = {i} expense = {val}  count = {i+1} />
                })} 
+            </div>
             </div>
         );
     }
