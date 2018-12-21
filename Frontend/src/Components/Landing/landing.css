@@ -1,0 +1,26 @@
+
+.Container{
+        background-color: #fff;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        width: 50% auto;
+        position: relative;
+        margin-top: calc(10vh + 30px);
+        margin-left: calc(10vw + 100px);
+        margin-right:calc(10vw + 100px);
+        z-index: 100;
+}
+
+form{
+    background: none;
+}
+
+.TextField{
+    width: 30% auto;
+}
+
+
+
+
+

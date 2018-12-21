@@ -19,9 +19,7 @@ const logger = store => next => action => {
   return result;
 }
 
-
 const rootReducer = combineReducers({main: mainReducer, form: formReducer});
-
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 const current_state = store.getState();
 const app = (
