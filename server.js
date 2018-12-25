@@ -1,6 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const app = express();
+const path = require("path");
 const cors = require("cors");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
@@ -11,6 +12,7 @@ const expenses = require("./Routes/api/expenses");
 const cookieSecret = require("./Config/Keys/key").cookieSecret;
 const cookieSession = require("cookie-session");
 const session = require("express-session");
+
 require("./Config/Passport/passport");
 
 mongoose.connect(db, { useNewUrlParser: true })
@@ -30,6 +32,5 @@ app.use("/api/expenses", expenses);
 app.get("/",  (req, res) => {
     res.send("Welcome to Home");
 });
-
-app.listen(port, () => console.log("The server is running on Port " + port));
+ app.listen(port, () => console.log("The server is running on Port " + port));
 

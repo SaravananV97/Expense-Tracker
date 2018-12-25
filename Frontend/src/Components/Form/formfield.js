@@ -16,8 +16,8 @@ const Field = (props) => {
             break;
         case "date":
                 field = (<div className = "form-inline d-flex justify-content-around">
-                <label style = {labelStyle}>Date: </label>
-                <input onChange = {props.dateChange} type = "date" />
+                    <label style = {labelStyle}>Date: </label>
+                    <input onChange = {props.dateChange} type = "date" />
                 </div>
                 );
                 break;

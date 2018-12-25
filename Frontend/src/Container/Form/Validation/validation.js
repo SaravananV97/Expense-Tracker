@@ -1,6 +1,4 @@
 import isEmpty from "../../../validation/isEmpty";
-// const val = {amount: this.props.amount, currentUser: this.props.currentUser, date: this.props.date, 
-//     catagory: this.props.category, details: this.props.details};
 
 const validateForm = (obj) => {
     
