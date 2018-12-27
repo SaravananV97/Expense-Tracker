@@ -8,7 +8,8 @@ const initState = {
         currentExpense: 0,
         currentIncome: 0,
         currentUserId: "",
-        currentHoldings: 0
+        currentHoldings: 0,
+        is_Authenticated: false
     }
 };
 
@@ -41,6 +42,12 @@ const mainReducer = (state = initState, action) => {
                const user = action.payload;
                console.log(user);
                return {...state, userInfo:{...state.userInfo, currentHoldings: user.currentHoldings, currentExpense: user.totalExpenses}};
+        
+        case actionTypes.toggleIsAuthenticated:
+                const is_authed = action.payload;
+                return {...state, is_Authenticated: is_authed}
+        case actionTypes.loggingOut:
+                return {...initState}        
         default: return state;
     }
 }

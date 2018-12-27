@@ -33,3 +33,11 @@ export const getUserInfoFailure = (err) => {
     return {type: actionTypes.getUserInfoFailure, payload: {...err}}
 }
 
+export const toggleIsAuthenticated = (val) => {
+    return {type:actionTypes.toggleIsAuthenticated, payload: val}
+}
+
+export const loggingOut = () => {
+    return {type: actionTypes.loggingOut}
+}
+

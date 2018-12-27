@@ -25,12 +25,14 @@ class Register extends Component {
     handleRegisterClick = () => {
         console.log("Register Clicked...")
         const fields = {...this.state}
-        console.log(fields);
         const errors = {...validate(fields)};
-        if(Object.keys(errors).length > 0)
-            this.setState({errors});
-        else{
-            //Axios Post...
+        this.setState({errors});
+        if(Object.keys(errors).length <= 0){
+            axios.post("/api/users/register", fields).then((res) =>{
+                if(res.data.email !== undefined)
+                    this.setState({errors:{email:res.data.email}});
+            })
+            .catch((err) => console.log(err));
         }
     }
     handleChange = (name) =>{

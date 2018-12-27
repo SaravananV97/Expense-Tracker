@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import "./landing.css";
 import validate from "./validation/validation"; 
 import {TextField, Button, FormHelperText} from "@material-ui/core";
-
+import axios from "axios";
+import jwt_decode from "jwt-decode";
+import setAuthTokenToHeader from  "./utils/set_header";
 class Login extends Component{
     constructor(props){
         super(props);
@@ -15,17 +17,28 @@ class Login extends Component{
             }
         }
     }
-1
     handleLoginClick = () => {
         const fields = {...this.state}
         const errors = {...validate(fields)};
-        if(Object.keys(errors).length > 0)
-            this.setState({errors});
-        else{
-            //Axios Post...
+        this.setState({errors});
+        if(Object.keys(errors).length <= 0){
+            axios.post("/api/users/login", fields).then((res) =>{
+                if(res.data.password !== undefined)
+                    this.setState({errors:{password:res.data.password}});
+                else if(res.data.email !== undefined)
+                    this.setState({errors:{email: res.data.email}});
+                else{
+                    const token = res.data.jwtToken;
+                    localStorage.setItem("auth_token", token);
+                    setAuthTokenToHeader(token);
+                    const id = jwt_decode(token).sub;
+                    // console.log(id);
+                    this.props.history.push(`/home/${id}`)
+                }
+            })
+            .catch((err) => console.log(err));
         }
     }
-
     handleChange = (name) =>{
             return (event) => this.setState({[name]: event.target.value});
         } 

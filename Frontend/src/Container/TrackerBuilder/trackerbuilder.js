@@ -21,7 +21,11 @@ class Tracker extends Component{
         axios.get(`/api/users/userdetails/${id}`).then((details) => 
         {
             console.log(details);
+            this.props.toggleIsAuthenticated(true);
             this.props.setDetails(details);
+    })
+    .catch( (err) => {
+        throw new Error(err)
     });
         }
 
@@ -30,7 +34,7 @@ class Tracker extends Component{
        return (
             <div className = "Body">
                 <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
-                <NavBar is_home = {true} currentUserId = {this.props.currentUserId} currentUser = {this.props.currentUser}></NavBar>
+                <NavBar logout_clicked = {this.props.onLogoutClick} is_home = {true} currentUserId = {this.props.currentUserId} currentUser = {this.props.currentUser}></NavBar>
                 <Chart expense = {this.props.currentExpense} holdings = {this.props.currentHoldings}></Chart>
                 <Modal show = {this.props.addingExpense}><Form update_details = {this.props.modifyDetails}
                 details_placeholder = "Expense Details" exp_inc = {this.props.addingExpense} current_user = {this.props.currentUserId} amount_placeholder = "Amount Spent" 
@@ -63,11 +67,13 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        toggleIsAuthenticated: (val) => dispatch(actionCreators.toggleIsAuthenticated(val)),
         modifyDetails: (user_id) => dispatch(asyncActionCreators.getUserInfoAsync(user_id)),
         setDetails: (details) => dispatch(actionCreators.setUserDetails(details)),
         onAddExpenseClick: () => dispatch(actionCreators.addingExpenseCreator()),
         onAddIncomeClick: () => dispatch(actionCreators.addingIncomeCreator()),
         onCancelClick: (user_id) => dispatch(actionCreators.cancelAdditionCreator(user_id)),        
+        onLogoutClick: () => dispatch(actionCreators.loggingOut())
     }
 }
 

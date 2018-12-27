@@ -19,7 +19,7 @@ class Landing extends Component {
     return (
         <div className = "Body">
         <NavBar />
-        {this.state.isLoggingIn?<Login handleRegisterLogin = {this.handleIsLogging} />:<Register handleRegisterLogin ={this.handleIsLogging} />}
+        {this.state.isLoggingIn?<Login {...this.props} handleRegisterLogin = {this.handleIsLogging} />:<Register {...this.props} handleRegisterLogin ={this.handleIsLogging} />}
     </div>
     );
     }

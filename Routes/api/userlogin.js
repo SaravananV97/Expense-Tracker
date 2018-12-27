@@ -41,9 +41,9 @@ router.post("/login", async (req, res) => {
            if(match){
                 res.json({ jwtToken: generateToken(user.id) });
            }
-           else res.status(401).json({msg: "wrong Password"});
+           else res.status(401).json({password: "Please enter a right Password"});
         }
-        else res.json({err: "User Not Found!"});
+        else res.json({email: "Email ID not found!"});
     }
     catch(err){
         throw new Error(err);
@@ -51,18 +51,19 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/register", (req, res) => {
+    console.log(req.body);
     const email = req.body.email;
-    console.log(email);
     const password = req.body.password;
+    const name = req.body.firstName + " " + req.body.lastName;
     User.findOne({email}).then((user) =>{
-        console.log(user);
-        if(user) res.status(403).json({msg: "Email Id is already in use"});
+       if(user) res.json({email: "Email Id is already in use"});
         else{
-            const newUser = new User({email, password, name: req.body.firstname + " " + req.body.lastname});
+            const newUser = new User({
+                                    email: req.body.email,
+                                     password: req.body.password, 
+                                     name: name});
             newUser.save().then((savedUser) =>{
-                const token = generateToken(savedUser.id);
-                console.log(token);
-                res.json({jwtToken: token})
+                res.json({msg: "User Registration Successful!" });
             })
             .catch(err => res.json(err));
         }
