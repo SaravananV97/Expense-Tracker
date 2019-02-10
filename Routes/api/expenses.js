@@ -4,21 +4,34 @@ const router = express.Router();
 const url = require("url");
 const User = require("../../DBModel/userModel")
 
-router.get("/test", (req, res) => {
+router.get("/test", passport.authenticate("jwt", {session: false}) ,(req, res) => {
     res.json({msg: "Works fine to me...!"})
 });
 
-router.get("/showexpenses/:user_id", (req, res) => {
+router.get("/showincomes/:user_id", passport.authenticate("jwt", {session:false}) ,(req, res) => {
 
     const user_id = req.params.user_id;
-    console.log(user_id)
+    User.findById(user_id).then((user) => {
+        if(!user) res.status(404).json({msg: "User Not found"});
+        else res.status(200).json({incomes: user.incomes});
+    });
+});
+
+router.get("/showexpenses/:user_id", passport.authenticate("jwt", {session:false}),(req, res) => {
+
+    const user_id = req.params.user_id;
+    // console.log(user_id)
     User.findById(user_id).then((user) => {
         if(!user)
             res.status(404).json({msg: "User Not Found!"});
         else res.status(200).json({expenses: user.expenses});
     })
-    .catch(err => res.status(404).json({err}));
+    .catch(err => {
+        console.log(err);   
+        res.status(404).json({err})
+    }); 
 }); 
+
 
 router.post("/addincome", (req, res) => {
     const income = req.body.income;
@@ -41,7 +54,7 @@ router.post("/addincome", (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.post("/add",(req, res) => {
+router.post("/add", (req, res) => {
     const expense = req.body.expense;
     console.log(expense.currentUser);
     User.findById(expense.currentUser).then((user) => {

@@ -22,6 +22,7 @@ const logger = store => next => action => {
 const rootReducer = combineReducers({main: mainReducer, form: formReducer});
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(logger, thunk)));
 const current_state = store.getState();
+
 const app = (
     <Provider store = {store}>
     <BrowserRouter>
@@ -29,8 +30,6 @@ const app = (
     </BrowserRouter>
     </Provider>
     );
-
-
 
 ReactDOM.render(app, document.getElementById('root'));
 

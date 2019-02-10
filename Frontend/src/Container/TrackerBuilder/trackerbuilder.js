@@ -20,8 +20,6 @@ class Tracker extends Component{
         const id = this.props.match.params.id;
         axios.get(`/api/users/userdetails/${id}`).then((details) => 
         {
-            console.log(details);
-            this.props.toggleIsAuthenticated(true);
             this.props.setDetails(details);
     })
     .catch( (err) => {
@@ -30,7 +28,7 @@ class Tracker extends Component{
         }
 
     render(){
-        console.log(this.props)
+
        return (
             <div className = "Body">
                 <Backdrop show = {this.props.addingIncome || this.props.addingExpense}></Backdrop>
@@ -67,7 +65,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        toggleIsAuthenticated: (val) => dispatch(actionCreators.toggleIsAuthenticated(val)),
         modifyDetails: (user_id) => dispatch(asyncActionCreators.getUserInfoAsync(user_id)),
         setDetails: (details) => dispatch(actionCreators.setUserDetails(details)),
         onAddExpenseClick: () => dispatch(actionCreators.addingExpenseCreator()),

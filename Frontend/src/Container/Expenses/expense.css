@@ -1,7 +1,32 @@
+
 .Body{
-
-
 }
+
+.AfterCard{
+  position: relative;
+}
+
+.pagination{
+  position: absolute;
+  top: 30%;
+  left: 40%;
+  display: inline-flex;
+}
+
+.pagination a {
+  text-decoration: none;
+  color:white;
+  background: black;
+  float: center;
+  padding: 8px 16px;
+}
+
+.pagination a.active{
+    background: #008510;
+    
+}
+
+
 
 .container{
   justify-content: space-between;

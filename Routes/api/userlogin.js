@@ -5,22 +5,14 @@ const User = require("../../DBModel/userModel");
 const url = require("url");
 const {jwtAuth} = require("../../Config/Keys/key");
 const bcrypt = require("bcrypt");
+
 const jwt = require("jsonwebtoken");
 router.post("/test", (req, res) => {
     res.json({test: "Its working fine ....", msg: req.body});
 });
 
-const generateToken = (id) => {
-    return jwt.sign({
-        iss: "Expense Tracker",
-        sub: id,
-        iat: new Date().getDate(),
-        exp: new Date().getDate() + 1  
-    }, jwtAuth.secret);
-}
-
 router.get("/userdetails/:id",(req, res) => {
-    console.log(req.logout);
+    // console.log(req.logout);
     User.findById(req.params.id).then((user) => {
 
         if(!user){
@@ -34,12 +26,17 @@ router.get("/userdetails/:id",(req, res) => {
 router.post("/login", async (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
+    // console.log(password);
     const user = await User.findOne({email});
     try{
         if(user){
             const match = await user.isValidPassword(password);
            if(match){
-                res.json({ jwtToken: generateToken(user.id) });
+               payload = {id: user.id, email}
+            jwt.sign(payload, jwtAuth.secret,{expiresIn: 24*60*60},(err,token) => {
+                res.json({success:true,
+                    jwt: token});
+            } )
            }
            else res.status(401).json({password: "Please enter a right Password"});
         }
@@ -49,6 +46,12 @@ router.post("/login", async (req, res) => {
         throw new Error(err);
     }
 });
+
+router.post("/logout", (req, res) => {
+
+
+
+})
 
 router.post("/register", (req, res) => {
     console.log(req.body);

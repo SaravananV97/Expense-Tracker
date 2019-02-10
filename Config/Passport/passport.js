@@ -9,16 +9,21 @@ passport.serializeUser((user, done) => {
     done(null, user.id)    // for adding cookies 
 });                                
 
-passport.use(new JwtStrategy({
-    jwtFromRequest: ExtractJwt.fromHeader("authorization"),
+opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: jwtAuth.secret
-}, async (payload, done) => {
+} 
+
+passport.use(new JwtStrategy(opts, async (payload, done) => {
     try{
-   const user = await User.findById(payload.sub);
+        console.log("logging...payload...")
+        // console.log(payload);
+   const user = await User.findById(payload.id);
    if(!user) done(null, false);
    else done(null, user);
     }
     catch(err){
+        console.log("error");
         res.json({err});
     }
 }));

@@ -6,13 +6,14 @@ const navBar = (props) => {
 const img = <img src= {logo} height = "35px" width = "35px" alt="Loading" />
 console.log(props);
 return (
+
 <nav className="navbar navbar-expand-md navbar-dark bg-dark">
     <div className="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
         <ul className="navbar-nav mr-auto">
             <NavItem href = {`home/${props.currentUserId}`} className = "active">Home</NavItem>
             {props.is_home?<NavItem>Welcome, {props.currentUser}</NavItem>:null}
             <NavItem href = {`expenses/${props.currentUserId}`}>Expenses</NavItem>
-            <NavItem href = "incomes">Incomes</NavItem>
+            <NavItem href = {`incomes/${props.currentUserId}`}>Incomes</NavItem>
         </ul>
     </div>
     <div className="mx-auto order-0">
@@ -24,9 +25,8 @@ return (
     <div className="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul className="navbar-nav ml-auto">
             <li className="nav-item">
-                <a onClick = {this.props.logout_clicked} className="nav-link" href="#">Logout</a>
+                <a onClick = {props.logout_clicked} className="nav-link" href="/">Logout</a>
             </li>
-
         </ul>
     </div>
 </nav>

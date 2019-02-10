@@ -3,6 +3,7 @@ import "./landing.css";
 import NavBar from "../Navbar/navbar_land";
 import Register from "./register";
 import Login from "./login";
+
 class Landing extends Component {
 
     constructor(props){
@@ -24,7 +25,6 @@ class Landing extends Component {
     );
     }
 }
-
 
 export default Landing;
 

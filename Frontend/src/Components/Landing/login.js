@@ -3,8 +3,9 @@ import "./landing.css";
 import validate from "./validation/validation"; 
 import {TextField, Button, FormHelperText} from "@material-ui/core";
 import axios from "axios";
+import * as actionCreators from "../../Store/Actions/actionsCreators";
 import jwt_decode from "jwt-decode";
-import setAuthTokenToHeader from  "./utils/set_header";
+import {connect} from "react-redux";
 class Login extends Component{
     constructor(props){
         super(props);
@@ -28,11 +29,13 @@ class Login extends Component{
                 else if(res.data.email !== undefined)
                     this.setState({errors:{email: res.data.email}});
                 else{
-                    const token = res.data.jwtToken;
-                    localStorage.setItem("auth_token", token);
-                    setAuthTokenToHeader(token);
-                    const id = jwt_decode(token).sub;
-                    // console.log(id);
+                    const token = res.data.jwt;
+                    localStorage.setItem("auth_token", `Bearer ${token}`);
+                    this.props.setIsAuthenticated();
+                    // console.log(token);
+                    // console.log(axios.defaults.headers.common);
+                    // setAuthTokenToHeader(token);
+                    const id = jwt_decode(token).id;
                     this.props.history.push(`/home/${id}`)
                 }
             })
@@ -61,7 +64,8 @@ class Login extends Component{
                     label = "Password"
                     className = "TextField"
                     hintText="Password"
-                    onChange = {this.handleChange("password")}                    floatingLabelText="Password"
+                    onChange = {this.handleChange("password")} 
+                    floatingLabelText="Password"
                     type="password">
                 </TextField>
                 <FormHelperText style = {errorStyle}>{this.state.errors.password}</FormHelperText>
@@ -72,7 +76,12 @@ class Login extends Component{
             </form>
         );
     }
-
 }
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setIsAuthenticated: () => dispatch(actionCreators.toggleIsAuthenticated(true))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login);

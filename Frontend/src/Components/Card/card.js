@@ -25,13 +25,15 @@ const styles = {
   },
 };
 
+
 function SimpleCard(props) {
   const { classes } = props;
+  const card_type = props.isExpense?"Expense":"Income";
   return (
     <Card className={classes.card}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Expense Summary #{props.count}
+          {card_type} Summary #{props.count}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {props.expense.date}

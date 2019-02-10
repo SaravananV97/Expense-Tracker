@@ -1,5 +1,7 @@
 import * as actionTypes from "../Actions/actionTypes";
-import * as asyncAction from "../Actions/axios-actions";
+// import * as asyncAction from "../Actions/axios-actions";
+import axios from "axios";
+
 const initState = {
     addingIncome: false,
     addingExpense: false,
@@ -30,6 +32,7 @@ const mainReducer = (state = initState, action) => {
                 action.data = action.data.data;
                 return {
                     ...state, userInfo: {
+                        ...state.userInfo,
                         currentUser: action.data.name,
                         currentExpense: action.data.totalExpenses,
                         currentUserId: action.data._id,
@@ -40,13 +43,17 @@ const mainReducer = (state = initState, action) => {
 
         case actionTypes.getUserInfoSuccess:
                const user = action.payload;
-               console.log(user);
+            //    console.log(user);
                return {...state, userInfo:{...state.userInfo, currentHoldings: user.currentHoldings, currentExpense: user.totalExpenses}};
         
         case actionTypes.toggleIsAuthenticated:
                 const is_authed = action.payload;
-                return {...state, is_Authenticated: is_authed}
+                return {...state, userInfo:{...state.userInfo, is_Authenticated: is_authed}}
+        
         case actionTypes.loggingOut:
+                axios.defaults.headers.commons["Authorization"] = null;
+                localStorage.clear();
+                console.log("After Logging out..");
                 return {...initState}        
         default: return state;
     }
