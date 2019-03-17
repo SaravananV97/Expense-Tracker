@@ -36,7 +36,7 @@ class Expenses extends Component {
     render(){
         if(this.state.expenses == null)
         return (<div>Loading...</div>);
-        const itemPerPage = 10;
+        const itemPerPage = 2;
         const activePage = this.state.activePage;
         const start_index = (activePage-1) * itemPerPage;
         const end_index = start_index + itemPerPage;

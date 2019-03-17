@@ -4,11 +4,12 @@
         padding: 3rem;
         display: flex;
         flex-direction: column;
-        width: 50% auto;
+        width: 30%;
+        height: 30%;
         position: relative;
-        margin-top: calc(10vh + 30px);
-        margin-left: calc(10vw + 100px);
-        margin-right:calc(10vw + 100px);
+        box-shadow: 0 0 1px;
+        margin-top: calc(10vh + 10px);
+        margin-left: calc(35vw + 10px);
         z-index: 100;
 }
 
