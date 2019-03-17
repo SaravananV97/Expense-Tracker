@@ -18,11 +18,14 @@ require("./Config/Passport/passport");
 mongoose.connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to DB"))
     .catch((err) => console.log(err));
+if(process.env.NODE_ENV !== "dev"){
+    app.use(express.static(path.join(__dirname, "Frontend/build")));
+
+    app.get("*", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "Frontend", "build", "index.html"));
+    });
+}
 app.use(cors());
-app.use(cookieSession({
-    keys: [cookieSecret],
-    maxAge: 30 * 24 * 60 * 60 * 1000
-}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(bodyparser.json());
